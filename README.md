@@ -1,4 +1,4 @@
-# Project 1 (Due: 10/3/2025)
+# Project 1 (Due: 10/6/2025 11:59PM)
 This is the first project in this semester, and you're going to train several neural models with different architectures 
 on Penn Discourse Tree Bank (PDTB). The goal of this project is to practice your deep learning programming skills and 
 learn from observations produced by practical training.
@@ -87,7 +87,7 @@ uv run main.py <ARGUMENTS> --<OPTIONS>
 ### Models
 You have the following models to implement in the module `model.py`:
 * A softmax classifier same as you did in project 0
-* A multilayer perceptron (MLP) with your decided number of hidden layers and size
+* A multilayer perceptron (MLP) with your decided number of hidden layers, size, and activation functions.
 * A convolutional neural network with your customized configuration (e.g. paddings, strides)
 
 Eventually, these models will be imported in `main.py` for training, evaluation and experiments.
