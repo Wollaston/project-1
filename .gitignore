@@ -16,3 +16,8 @@ __MACOSX
 # IDE
 .vscode
 .idea
+
+# Data
+pdtb/
+*.zip
+*.txt
