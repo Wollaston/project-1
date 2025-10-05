@@ -1,7 +1,4 @@
-from typing import Optional
-
-from pydantic import AliasPath, BaseModel, ConfigDict, Field
-from torch import Tensor
+from pydantic import AliasPath, BaseModel, ConfigDict, Field, computed_field
 
 
 class Arg(BaseModel):
@@ -26,4 +23,12 @@ class Sample(BaseModel):
     doc_id: str = Field(validation_alias=AliasPath("DocID"))
     id: int = Field(validation_alias=AliasPath("ID"))
     sense: list[str] = Field(validation_alias=AliasPath("Sense"))
-    tensor: Optional[Tensor] = None
+
+    @computed_field()
+    @property
+    def vocab(self) -> set[str]:
+        vocab: set[str] = set()
+        [vocab.add(tok.lower()) for tok in self.arg1.raw_text.split()]
+        [vocab.add(tok.lower()) for tok in self.arg2.raw_text.split()]
+        [vocab.add(tok.lower()) for tok in self.connective.raw_text.split()]
+        return vocab

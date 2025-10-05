@@ -11,6 +11,13 @@ one. Usage is described in its docstring.
 * Other than that, you're welcome to add any functionalities in this module
 """
 
+from torch import Tensor
+from torcheval.metrics.functional import (
+    multiclass_accuracy,
+    multiclass_precision,
+    multiclass_recall,
+)
+
 
 def to_level(sense: str, level: int = 2) -> str:
     """converts a sense in string to a desired level
@@ -118,3 +125,22 @@ def map_senses(sense: str, level: int) -> int:
             return sense_map_3[sense]
         case _:
             raise ValueError(f"Only supports sense levels 1, 2, and 3. Got {level}")
+
+
+def accuracy(pred: Tensor, target: Tensor) -> float:
+    """Computes accuracy for given prediction and target tensors"""
+    return multiclass_accuracy(pred, target).item()
+
+
+def recall(pred: Tensor, target: Tensor, num_classes: int) -> float:
+    """Computes recall for given prediction and target tensors"""
+    return multiclass_recall(
+        pred, target, average="macro", num_classes=num_classes
+    ).item()
+
+
+def precision(pred: Tensor, target: Tensor, num_classes: int) -> float:
+    """Computes precision for given prediction and target tensors"""
+    return multiclass_precision(
+        pred, target, average="macro", num_classes=num_classes
+    ).item()

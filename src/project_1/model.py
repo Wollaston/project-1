@@ -59,20 +59,20 @@ class MLP(nn.Module):
 class CNN(nn.Module):
     """Convolutional Neural Net Model"""
 
-    def __init__(self, output_size: int) -> None:
+    def __init__(self, input_size: int, output_size: int) -> None:
         super().__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
-        self.pool = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(16 * 5 * 5, 120)
-        self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, output_size)
+        self.conv1 = nn.Conv1d(input_size, 6, 5)
+        self.pool = nn.MaxPool1d(2, 2)
+        self.conv2 = nn.Conv1d(6, 16, 5)
+        self.fc1 = nn.Linear(16 * 5 * 5, 256)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, output_size)
 
     def forward(self, input):
         c1 = F.relu(self.conv1(input))
-        s2 = F.max_pool2d(c1, (2, 2))
+        s2 = F.max_pool1d(c1, (2, 2))
         c3 = F.relu(self.conv2(s2))
-        s4 = F.max_pool2d(c3, 2)
+        s4 = F.max_pool1d(c3, 2)
         s4 = torch.flatten(s4, 1)
         f5 = F.relu(self.fc1(s4))
         f6 = F.relu(self.fc2(f5))
