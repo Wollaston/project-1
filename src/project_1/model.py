@@ -11,12 +11,6 @@ import torch.nn.functional as F
 import torch.nn as nn
 import torch
 
-device = (
-    torch.accelerator.current_accelerator().type
-    if torch.accelerator.is_available()
-    else "cpu"
-)
-
 
 # via Project 0
 class LogisticRegression(nn.Module):

@@ -37,6 +37,8 @@ from project_1.dataset import DenseDataset, SparseDataset
 from project_1.model import CNN, MLP, LogisticRegression
 from project_1.utils import accuracy, precision, recall, sense_levels
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 class Metrics(BaseModel):
     loss: float
@@ -73,6 +75,8 @@ def train_loop(
     # Unnecessary in this situation but added for best practices
     model.train()
     for batch, (X, y) in enumerate(dataloader):
+        X = X.to(device)
+        y = y.to(device)
         logging.debug(f"Train Batch {batch}")
         # Compute prediction and loss
         optimizer.zero_grad()
@@ -104,6 +108,8 @@ def test_loop(
     # also serves to reduce unnecessary gradient computations and memory usage for tensors with requires_grad=True
     with torch.no_grad():
         for X, y in dataloader:
+            X = X.to(device)
+            y = y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
             pred = model(X).argmax(1)
@@ -325,6 +331,8 @@ Epochs: {epochs}""")
     test_dataloader: DataLoader[DenseDataset] = DataLoader(
         test_dataset, batch_size=batch_size, shuffle=False
     )
+
+    model.to(device)
 
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
