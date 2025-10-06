@@ -323,13 +323,13 @@ Epochs: {epochs}""")
             logging.debug(f"Train Dataset: {train_dataset}")
 
     train_dataloader: DataLoader[DenseDataset] = DataLoader(
-        train_dataset, batch_size=batch_size, shuffle=True
+        train_dataset, batch_size=batch_size, shuffle=True, drop_last=True
     )
     dev_dataloader: DataLoader[DenseDataset] = DataLoader(
-        dev_dataset, batch_size=batch_size, shuffle=False
+        dev_dataset, batch_size=batch_size, shuffle=False, drop_last=True
     )
     test_dataloader: DataLoader[DenseDataset] = DataLoader(
-        test_dataset, batch_size=batch_size, shuffle=False
+        test_dataset, batch_size=batch_size, shuffle=False, drop_last=True
     )
 
     model.to(device)
@@ -364,46 +364,3 @@ if __name__ == "__main__":
     print(
         "This project should be run as a cli.\nTry: `uv run main.py` to access the cli."
     )
-
-# NOTES
-# Test Metrics:
-# Avg Accuracy: 79.6%
-# Avg Precision: 0.7100139
-# Avg Recall: 0.738687
-# Avg Loss: 1.1005534
-#     learning_rate = 0.05
-# batch_size = 128
-# epochs = 32
-# Level 1
-# 50 Dimensions
-#
-#
-# 100 deimsnions
-# #Test Metrics:
-#  Avg Accuracy: 84.1%
-#  Avg Precision: 0.824263
-#  Avg Recall: 0.807399
-#  Avg Loss: 1.445723
-#
-#  Test Metrics:
-#  200 dimensions
-# Avg Accuracy: 84.7%
-# Avg Precision: 0.851310
-# Avg Recall: 0.797410
-# Avg Loss: 1.370763
-#
-#
-#
-# MLP
-# d50
-# Test Metrics:
-# Avg Accuracy: 94.0%
-# Avg Precision: 0.939422
-# Avg Recall: 0.899050
-# Avg Loss: 0.153539
-# d100
-# Test Metrics:
-# Avg Accuracy: 94.2%
-# Avg Precision: 0.929967
-# Avg Recall: 0.914116
-# Avg Loss: 0.135965
